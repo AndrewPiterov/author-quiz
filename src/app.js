@@ -1,4 +1,4 @@
 import FlashMessage from "./flash-message";
 
-let flash = new FlashMessage("Gulp, Babel and Browserfy");
+let flash = new FlashMessage("Hi there!");
 flash.display();

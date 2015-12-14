@@ -7,7 +7,7 @@ var _flashMessage2 = _interopRequireDefault(_flashMessage);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var flash = new _flashMessage2.default("Gulp, Babel and Browserfy");
+var flash = new _flashMessage2.default("Hi there!");
 flash.display();
 
 },{"./flash-message":2}],2:[function(require,module,exports){
