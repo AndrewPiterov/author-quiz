@@ -1,0 +1,26 @@
+{
+  "name": "babel-with-gulp",
+  "description": "",
+  "main": "index.js",
+  "authors": [
+    "pfm@live.ru"
+  ],
+  "license": "ISC",
+  "keywords": [
+    "ES2015",
+    "Babel",
+    "Gulp"
+  ],
+  "moduleType": [],
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "~3.3.6"
+  }
+}
