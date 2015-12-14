@@ -8,5 +8,4 @@ class FlashMessage{
   }
 }
 
-let m = new FlashMessage("Hello ES2015");
-m.display();
+export default FlashMessage;
