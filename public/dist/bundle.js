@@ -19051,7 +19051,7 @@ var Book = (function (_React$Component) {
     value: function render() {
       return _react2.default.createElement(
         "div",
-        null,
+        { className: "answer" },
         _react2.default.createElement(
           "h4",
           null,
@@ -19090,7 +19090,39 @@ var _quiz2 = _interopRequireDefault(_quiz);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-_reactDom2.default.render(_react2.default.createElement(_quiz2.default, { books: ['The Lord of the Rings', 'The Iliad', 'The War and The Peace'] }), document.getElementById("app"));
+var data = [{
+  name: 'Mark Twain',
+  imageUrl: 'images/authors/marktwain.jpg',
+  books: ['The Adventures of Huckleberry Finn']
+}, {
+  name: 'Joseph Conrad',
+  imageUrl: 'images/authors/josephconrad.png',
+  books: ['Heart of Darkness']
+}, {
+  name: 'J.K. Rowling',
+  imageUrl: 'images/authors/jkrowling.jpg',
+  imageSource: 'Wikimedia Commons',
+  imageAttribution: 'Daniel Ogren',
+  books: ['Harry Potter and the Sorcerers Stone']
+}, {
+  name: 'Stephen King',
+  imageUrl: 'images/authors/stephenking.jpg',
+  imageSource: 'Wikimedia Commons',
+  imageAttribution: 'Pinguino',
+  books: ['The Shining', 'IT']
+}, {
+  name: 'Charles Dickens',
+  imageUrl: 'images/authors/charlesdickens.jpg',
+  imageSource: 'Wikimedia Commons',
+  books: ['David Copperfield', 'A Tale of Two Cities']
+}, {
+  name: 'William Shakespeare',
+  imageUrl: 'images/authors/williamshakespeare.jpg',
+  imageSource: 'Wikimedia Commons',
+  books: ['Hamlet', 'Macbeth', 'Romeo and Juliet']
+}];
+
+_reactDom2.default.render(_react2.default.createElement(_quiz2.default, { data: data }), document.getElementById("app"));
 
 },{"./quiz":161,"react":158,"react-dom":29}],161:[function(require,module,exports){
 "use strict";
@@ -19120,10 +19152,16 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var Quiz = (function (_React$Component) {
   _inherits(Quiz, _React$Component);
 
-  function Quiz() {
+  function Quiz(props) {
     _classCallCheck(this, Quiz);
 
-    return _possibleConstructorReturn(this, Object.getPrototypeOf(Quiz).apply(this, arguments));
+    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Quiz).call(this, props));
+
+    _this.state = {
+      author: _this.props.data[0],
+      books: _this.props.data[0].books
+    };
+    return _this;
   }
 
   _createClass(Quiz, [{
@@ -19132,22 +19170,33 @@ var Quiz = (function (_React$Component) {
       return _react2.default.createElement(
         "div",
         null,
-        this.props.books.map(function (book) {
-          return _react2.default.createElement(_book2.default, { title: book });
-        })
+        _react2.default.createElement(
+          "div",
+          { className: "row" },
+          _react2.default.createElement(
+            "div",
+            { className: "col-md-4" },
+            _react2.default.createElement("img", { src: this.state.author.imageUrl, alt: this.state.author.name, className: "authorimage col-md-3" })
+          ),
+          _react2.default.createElement(
+            "div",
+            { className: "col-md-7" },
+            this.state.books.map(function (book) {
+              return _react2.default.createElement(_book2.default, { title: book });
+            })
+          ),
+          _react2.default.createElement("div", { className: "col-md-1" })
+        )
       );
-    }
-  }], [{
-    key: "getPropTypes",
-    value: function getPropTypes() {
-      return this.propTypes = {
-        books: _react2.default.PropTypes.array.isRequired
-      };
     }
   }]);
 
   return Quiz;
 })(_react2.default.Component);
+
+Quiz.propTypes = {
+  data: _react2.default.PropTypes.array.isRequired
+};
 
 exports.default = Quiz;
 
