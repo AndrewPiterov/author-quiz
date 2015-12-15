@@ -1,8 +1,8 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import HelloWorld from "./hello-world";
+import Quiz from "./quiz";
 
 ReactDOM.render(
-  <HelloWorld />,
-  document.getElementById("container")
+  <Quiz books={['The Lord of the Rings', 'The Iliad', 'The War and The Peace']}/>,
+  document.getElementById("app")
 );
