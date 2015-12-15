@@ -5,10 +5,7 @@ class Quiz extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {
-      author: this.props.data[0],
-      books: this.props.data[0].books
-    }
+    this.state = this.props.data.selectGame();
   }
 
   render() {

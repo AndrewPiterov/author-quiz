@@ -19122,6 +19122,27 @@ var data = [{
   books: ['Hamlet', 'Macbeth', 'Romeo and Juliet']
 }];
 
+data.selectGame = function () {
+  var books = _.shuffle(this.reduce(function (p, c, i) {
+    "use strict";
+
+    return p.concat(c.books);
+  }, [])).slice(0, 4);
+
+  var answer = books[_.random(books.length - 1)];
+
+  return {
+    books: books,
+    author: _.find(this, function (author) {
+      "use strict";
+
+      return author.books.some(function (title) {
+        return title === answer;
+      });
+    })
+  };
+};
+
 _reactDom2.default.render(_react2.default.createElement(_quiz2.default, { data: data }), document.getElementById("app"));
 
 },{"./quiz":161,"react":158,"react-dom":29}],161:[function(require,module,exports){
@@ -19157,10 +19178,7 @@ var Quiz = (function (_React$Component) {
 
     var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Quiz).call(this, props));
 
-    _this.state = {
-      author: _this.props.data[0],
-      books: _this.props.data[0].books
-    };
+    _this.state = _this.props.data.selectGame();
     return _this;
   }
 
