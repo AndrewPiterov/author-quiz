@@ -56,7 +56,14 @@ data.selectGame = function () {
       return author.books.some(function (title) {
         return title === answer;
       })
-    })
+    }),
+
+    isAnswerRight: function (title) {
+      "use strict";
+      return this.author.books.some(function (t) {
+        return t === title;
+      })
+    }
   }
 
 };

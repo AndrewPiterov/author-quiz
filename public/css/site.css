@@ -16,6 +16,18 @@
   background-color: #d0e3f0;
 }
 
+.answerIndicator{
+  height: 340px;
+}
+
+.pass{
+  background-color: green;
+}
+
+.fail{
+  background-color: red;
+}
+
 
 footer{
   margin-top: 60px;

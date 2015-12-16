@@ -5,7 +5,29 @@ class Quiz extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = this.props.data.selectGame();
+    this.state = this.getInitialState();
+    this.handleBookSelected = this.handleBookSelected.bind(this);
+    this.handleContinue = this.handleContinue.bind(this);
+  }
+
+  getInitialState() {
+    return _.extend({
+      bgColor: 'natural',
+      showContinue: false
+    }, this.props.data.selectGame());
+  }
+
+  handleContinue() {
+    this.setState(this.getInitialState());
+  }
+
+  handleBookSelected(title) {
+    var isCorrect = this.state.isAnswerRight(title);
+
+    this.setState({
+      bgColor: isCorrect ? 'pass' : 'fail',
+      showContinue: isCorrect
+    });
   }
 
   render() {
@@ -16,13 +38,23 @@ class Quiz extends React.Component {
         </div>
         <div className="col-md-7">
           {this.state.books.map((book)=> {
-            return <Book title={book}/>
+            return <Book onBookSelected={this.handleBookSelected} title={book}/>
           })}
         </div>
-        <div className="col-md-1">
-
+        <div className={"col-md-1 answerIndicator "+this.state.bgColor}>
         </div>
       </div>
+
+      {this.state.showContinue ?
+        <div className="row">
+          <div className="col-md-12">
+            <input type="button" className="btn btn-primary btn-block" onClick={this.handleContinue}
+                   value="Next author"/>
+          </div>
+        </div> : <span />
+
+      }
+
     </div>);
   }
 }

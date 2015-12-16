@@ -19040,18 +19040,26 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var Book = (function (_React$Component) {
   _inherits(Book, _React$Component);
 
-  function Book() {
+  function Book(props) {
     _classCallCheck(this, Book);
 
-    return _possibleConstructorReturn(this, Object.getPrototypeOf(Book).apply(this, arguments));
+    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Book).call(this, props));
+
+    _this.handleClick = _this.handleClick.bind(_this);
+    return _this;
   }
 
   _createClass(Book, [{
+    key: "handleClick",
+    value: function handleClick() {
+      this.props.onBookSelected(this.props.title);
+    }
+  }, {
     key: "render",
     value: function render() {
       return _react2.default.createElement(
         "div",
-        { className: "answer" },
+        { onClick: this.handleClick, className: "answer" },
         _react2.default.createElement(
           "h4",
           null,
@@ -19059,17 +19067,14 @@ var Book = (function (_React$Component) {
         )
       );
     }
-  }], [{
-    key: "getPropTypes",
-    value: function getPropTypes() {
-      return this.propTypes = {
-        title: _react2.default.PropTypes.string.isRequired
-      };
-    }
   }]);
 
   return Book;
 })(_react2.default.Component);
+
+Book.propTypes = {
+  title: _react2.default.PropTypes.string.isRequired
+};
 
 exports.default = Book;
 
@@ -19139,7 +19144,15 @@ data.selectGame = function () {
       return author.books.some(function (title) {
         return title === answer;
       });
-    })
+    }),
+
+    isAnswerRight: function isAnswerRight(title) {
+      "use strict";
+
+      return this.author.books.some(function (t) {
+        return t === title;
+      });
+    }
   };
 };
 
@@ -19178,13 +19191,40 @@ var Quiz = (function (_React$Component) {
 
     var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Quiz).call(this, props));
 
-    _this.state = _this.props.data.selectGame();
+    _this.state = _this.getInitialState();
+    _this.handleBookSelected = _this.handleBookSelected.bind(_this);
+    _this.handleContinue = _this.handleContinue.bind(_this);
     return _this;
   }
 
   _createClass(Quiz, [{
+    key: "getInitialState",
+    value: function getInitialState() {
+      return _.extend({
+        bgColor: 'natural',
+        showContinue: false
+      }, this.props.data.selectGame());
+    }
+  }, {
+    key: "handleContinue",
+    value: function handleContinue() {
+      this.setState(this.getInitialState());
+    }
+  }, {
+    key: "handleBookSelected",
+    value: function handleBookSelected(title) {
+      var isCorrect = this.state.isAnswerRight(title);
+
+      this.setState({
+        bgColor: isCorrect ? 'pass' : 'fail',
+        showContinue: isCorrect
+      });
+    }
+  }, {
     key: "render",
     value: function render() {
+      var _this2 = this;
+
       return _react2.default.createElement(
         "div",
         null,
@@ -19200,11 +19240,21 @@ var Quiz = (function (_React$Component) {
             "div",
             { className: "col-md-7" },
             this.state.books.map(function (book) {
-              return _react2.default.createElement(_book2.default, { title: book });
+              return _react2.default.createElement(_book2.default, { onBookSelected: _this2.handleBookSelected, title: book });
             })
           ),
-          _react2.default.createElement("div", { className: "col-md-1" })
-        )
+          _react2.default.createElement("div", { className: "col-md-1 answerIndicator " + this.state.bgColor })
+        ),
+        this.state.showContinue ? _react2.default.createElement(
+          "div",
+          { className: "row" },
+          _react2.default.createElement(
+            "div",
+            { className: "col-md-12" },
+            _react2.default.createElement("input", { type: "button", className: "btn btn-primary btn-block", onClick: this.handleContinue,
+              value: "Next author" })
+          )
+        ) : _react2.default.createElement("span", null)
       );
     }
   }]);
